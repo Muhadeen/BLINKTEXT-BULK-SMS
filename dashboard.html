@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlinkText - Dashboard</title>
+    <style>
+        :root {
+            --primary-color: #5e72e4;
+            --secondary-color: #8392ab;
+            --accent-color: #11cdef;
+            --success-color: #2dce89;
+            --warning-color: #fb6340;
+            --danger-color: #f5365c;
+            --background-color: #f8f9fe;
+            --light-bg: #f6f9fc;
+            --text-color: #344767;
+            --light-text: #8392ab;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+            --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            color: var(--text-color);
+            background-color: var(--background-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+        }
+        
+        /* Sidebar styles */
+        .sidebar {
+            width: 260px;
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        .logo-icon {
+            margin-right: 8px;
+            font-size: 1.8rem;
+        }
+        
+        .sidebar-menu {
+            padding: 1.5rem 0;
+        }
+        
+        .menu-category {
+            color: var(--light-text);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.5rem 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .menu-item {
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: rgba(94, 114, 228, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .menu-item.active {
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .menu-icon {
+            margin-right: 10px;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Main content styles */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            transition: all 0.3s ease;
+        }
+        
+        .top-navbar {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+        
+        .page-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-menu .btn {
+            margin-left: 1rem;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        
+        .user-name {
+            font-weight: 600;
+        }
+        
+        .dashboard-content {
+            padding: 2rem;
+        }
+        
+        /* Stats cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .stat-primary {
+            background-color: rgba(94, 114, 228, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .stat-success {
+            background-color: rgba(45, 206, 137, 0.1);
+            color: var(--success-color);
+        }
+        
+        .stat-warning {
+            background-color: rgba(251, 99, 64, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .stat-info {
+            background-color: rgba(17, 205, 239, 0.1);
+            color: var(--accent-color);
+        }
+        
+        .stat-details {
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-label {
+            color: var(--light-text);
+            font-size: 0.875rem;
+        }
+        
+        /* Dashboard sections */
+        .dashboard-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .section-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+        
+        .section-action {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        
+        .section-body {
+            padding: 1.5rem;
+        }
+        
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .action-card {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .action-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .action-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .action-desc {
+            font-size: 0.875rem;
+            color: var(--light-text);
+        }
+        
+        /* Recent Messages Table */
+        .message-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .message-table th, .message-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .message-table thead th {
+            font-weight: 600;
+            color: var(--light-text);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+        }
+        
+        .message-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .status-delivered {
+            background-color: rgba(45, 206, 137, 0.1);
+            color: var(--success-color);
+        }
+        
+        .status-pending {
+            background-color: rgba(251, 99, 64, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .status-failed {
+            background-color: rgba(245, 54, 92, 0.1);
+            color: var(--danger-color);
+        }
+        
+        /* Contact Groups */
+        .groups-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .group-card {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .group-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .group-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: rgba(94, 114, 228, 0.1);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .group-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .group-count {
+            font-size: 0.875rem;
+            color: var(--light-text);
+        }
+        
+        /* Mobile Responsive */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+            }
+            
+            .quick-actions, .groups-list {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .message-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+        
+        /* Button styles */
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: #4a5acf;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(94, 114, 228, 0.1);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-comment-dots logo-icon"></i>
+                Blink<span>Text</span>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-category">Main</div>
+            <a href="dashboard.html" class="menu-item active">
+                <i class="fas fa-th-large menu-icon"></i> Dashboard
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-paper-plane menu-icon"></i> New Message
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-users menu-icon"></i> Contacts
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-layer-group menu-icon"></i> Groups
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-history menu-icon"></i> Message History
+            </a>
+            
+            <div class="menu-category">Account</div>
+            <a href="#" class="menu-item">
+                <i class="fas fa-cog menu-icon"></i> Settings
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-credit-card menu-icon"></i> Billing
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-question-circle menu-icon"></i> Help
+            </a>
+            <a href="index.html" class="menu-item">
+                <i class="fas fa-sign-out-alt menu-icon"></i> Logout
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-navbar">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="page-title">Dashboard</div>
+            <div class="user-menu">
+                <div class="user-info">
+                    <div class="user-avatar">JD</div>
+                    <div class="user-name">John Doe</div>
+                </div>
+                <button class="btn btn-outline">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <!-- Stats Section -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon stat-primary">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+                    <div class="stat-details">
+                        <div class="stat-value">1,254</div>
+                        <div class="stat-label">Messages Sent</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-success">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-details">
+                        <div class="stat-value">847</div>
+                        <div class="stat-label">Total Contacts</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-warning">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div class="stat-details">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Contact Groups</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-info">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-details">
+                        <div class="stat-value">98.2%</div>
+                        <div class="stat-label">Delivery Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <div class="section-title">Quick Actions</div>
+                </div>
+                <div class="section-body">
+                    <div class="quick-actions">
+                        <div class="action-card">
+                            <div class="action-icon">
+                                <i class="fas fa-paper-plane"></i>
+                            </div>
+                            <div class="action-title">Send New Message</div>
+                            <div class="action-desc">Create and send a new bulk message</div>
+                        </div>
+                        <div class="action-card">
+                            <div class="action-icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="action-title">Add Contacts</div>
+                            <div class="action-desc">Import or add new contacts</div>
+                        </div>
+                        <div class="action-card">
+                            <div class="action-icon">
+                                <i class="fas fa-object-group"></i>
+                            </div>
+                            <div class="action-title">Create Group</div>
+                            <div class="action-desc">Create a new contact group</div>
+                        </div>
+                        <div class="action-card">
+                            <div class="action-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="action-title">View Reports</div>
+                            <div class="action-desc">Check message delivery status</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Messages -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <div class="section-title">Recent Messages</div>
+                    <a href="#" class="section-action">View All</a>
+                </div>
+                <div class="section-body">
+                    <table class="message-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Group</th>
+                                <th>Recipients</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>May Event Reminder</td>
+                                <td>Event Attendees</td>
+                                <td>245</td>
+                                <td>Today, 10:30 AM</td>
+                                <td><span class="message-status status-delivered">Delivered</span></td>
+                            </tr>
+                            <tr>
+                                <td>Weekly Newsletter</td>
+                                <td>Subscribers</td>
+                                <td>1,245</td>
+                                <td>Yesterday, 4:15 PM</td>
+                                <td><span class="message-status status-delivered">Delivered</span></td>
+                            </tr>
+                            <tr>
+                                <td>Special Promotion</td>
+                                <td>Customers</td>
+                                <td>578</td>
+                                <td>May 19, 2025</td>
+                                <td><span class="message-status status-pending">Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td>Team Meeting</td>
+                                <td>Staff</td>
+                                <td>32</td>
+                                <td>May 18, 2025</td>
+                                <td><span class="message-status status-failed">Failed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Product Launch</td>
+                                <td>Partners</td>
+                                <td>125</td>
+                                <td>May 17, 2025</td>
+                                <td><span class="message-status status-delivered">Delivered</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Contact Groups -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <div class="section-title">Contact Groups</div>
+                    <a href="#" class="section-action">Manage Groups</a>
+                </div>
+                <div class="section-body">
+                    <div class="groups-list">
+                        <div class="group-card">
+                            <div class="group-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="group-title">Customers</div>
+                            <div class="group-count">578 contacts</div>
+                        </div>
+                        <div class="group-card">
+                            <div class="group-icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="group-title">Staff</div>
+                            <div class="group-count">32 contacts</div>
+                        </div>
+                        <div class="group-card">
+                            <div class="group-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="group-title">Partners</div>
+                            <div class="group-count">125 contacts</div>
+                        </div>
+                        <div class="group-card">
+                            <div class="group-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="group-title">Subscribers</div>
+                            <div class="group-count">1,245 contacts</div>
+                        </div>
+                        <div class="group-card">
+                            <div class="group-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="group-title">Event Attendees</div>
+                            <div class="group-count">245 contacts</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Sidebar on Mobile
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
