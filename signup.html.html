@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - BlinkText</title>
+    <style>
+        :root {
+            --primary-color: #5e72e4;
+            --secondary-color: #8392ab;
+            --accent-color: #11cdef;
+            --success-color: #2dce89;
+            --warning-color: #fb6340;
+            --danger-color: #f5365c;
+            --background-color: #f8f9fe;
+            --text-color: #344767;
+            --light-text: #8392ab;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+            --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            color: var(--text-color);
+            background-color: var(--background-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .signup-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .signup-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 500px;
+            padding: 2.5rem;
+            text-align: center;
+        }
+        
+        .signup-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .signup-logo span {
+            color: var(--accent-color);
+        }
+        
+        .logo-icon {
+            margin-right: 8px;
+            font-size: 2rem;
+        }
+        
+        .signup-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .signup-form {
+            text-align: left;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            font-size: 1rem;
+            color: var(--text-color);
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .phone-input-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .country-code {
+            width: 40%;
+            margin-right: 0.5rem;
+        }
+        
+        .phone-number {
+            width: 60%;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: #4a5acf;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+        }
+        
+        .login-link {
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--light-text);
+        }
+        
+        .login-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .go-back {
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--secondary-color);
+            text-decoration: none;
+            margin-top: 1.5rem;
+            width: fit-content;
+        }
+        
+        .go-back i {
+            margin-right: 0.5rem;
+        }
+        
+        .go-back:hover {
+            color: var(--primary-color);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--white);
+            color: var(--light-text);
+            font-size: 0.875rem;
+        }
+        
+        .creator {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        .terms-check {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .terms-check input {
+            margin-right: 0.5rem;
+            margin-top: 0.3rem;
+        }
+        
+        .terms-check label {
+            font-size: 0.875rem;
+            color: var(--light-text);
+        }
+        
+        .terms-check a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .terms-check a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .show-error {
+            display: block;
+            animation: shake 0.5s;
+        }
+        
+        @keyframes shake {
+            0%, 100% {transform: translateX(0);}
+            10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
+            20%, 40%, 60%, 80% {transform: translateX(5px);}
+        }
+        
+        @media (max-width: 576px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-card">
+            <div class="signup-logo">
+                <i class="fas fa-comment-dots logo-icon"></i>
+                Blink<span>Text</span>
+            </div>
+            <h1 class="signup-title">Create your account</h1>
+            <form id="signupForm" class="signup-form" action="otp.html">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstNameInput">First Name</label>
+                        <input type="text" id="firstNameInput" class="form-control" placeholder="Enter first name">
+                        <div id="firstNameError" class="error-message">Please enter your first name</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastNameInput">Last Name</label>
+                        <input type="text" id="lastNameInput" class="form-control" placeholder="Enter last name">
+                        <div id="lastNameError" class="error-message">Please enter your last name</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="emailInput">Email Address</label>
+                    <input type="email" id="emailInput" class="form-control" placeholder="Enter email address">
+                    <div id="emailError" class="error-message">Please enter a valid email address</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phoneInput">Phone Number</label>
+                    <div class="phone-input-container">
+                        <select id="countryCode" class="form-control country-code">
+                            <option value="+233">Ghana (+233)</option>
+                            <option value="+234">Nigeria (+234)</option>
+                            <option value="+254">Kenya (+254)</option>
+                            <option value="+27">South Africa (+27)</option>
+                            <option value="+251">Ethiopia (+251)</option>
+                            <option value="+20">Egypt (+20)</option>
+                            <option value="+212">Morocco (+212)</option>
+                            <option value="+255">Tanzania (+255)</option>
+                            <option value="+256">Uganda (+256)</option>
+                            <option value="+250">Rwanda (+250)</option>
+                            <option value="+221">Senegal (+221)</option>
+                            <option value="+263">Zimbabwe (+263)</option>
+                            <option value="+237">Cameroon (+237)</option>
+                            <option value="+258">Mozambique (+258)</option>
+                            <option value="+225">Côte d'Ivoire (+225)</option>
+                            <option value="+244">Angola (+244)</option>
+                            <option value="+260">Zambia (+260)</option>
+                            <option value="+231">Liberia (+231)</option>
+                            <option value="+241">Gabon (+241)</option>
+                            <option value="+243">DR Congo (+243)</option>
+                        </select>
+                        <input type="tel" id="phoneInput" class="form-control phone-number" placeholder="Phone number">
+                    </div>
+                    <div id="phoneError" class="error-message">Please enter a valid phone number</div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="passwordInput">Password</label>
+                        <input type="password" id="passwordInput" class="form-control" placeholder="Create password">
+                        <div id="passwordError" class="error-message">Password must be at least 8 characters</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPasswordInput">Confirm Password</label>
+                        <input type="password" id="confirmPasswordInput" class="form-control" placeholder="Confirm password">
+                        <div id="confirmPasswordError" class="error-message">Passwords do not match</div>
+                    </div>
+                </div>
+                
+                <div class="terms-check">
+                    <input type="checkbox" id="termsCheck">
+                    <label for="termsCheck">
+                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Create Account</button>
+                
+                <div class="login-link">
+                    Already have an account? <a href="login.html">Login</a>
+                </div>
+                
+                <a href="index.html" class="go-back">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </form>
+        </div>
+    </div>
+    
+    <footer>
+        &copy; 2025 BlinkText. All rights reserved.
+        <span class="creator">Created by MUHADEEN</span>
+    </footer>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+            const firstName = document.getElementById('firstNameInput').value;
+            const lastName = document.getElementById('lastNameInput').value;
+            const email = document.getElementById('emailInput').value;
+            const phone = document.getElementById('phoneInput').value;
+            const password = document.getElementById('passwordInput').value;
+            const confirmPassword = document.getElementById('confirmPasswordInput').value;
+            const termsChecked = document.getElementById('termsCheck').checked;
+            
+            // Validate first name
+            if (!firstName) {
+                document.getElementById('firstNameError').classList.add('show-error');
+                isValid = false;
+            } else {
+                document.getElementById('firstNameError').classList.remove('show-error');
+            }
+            
+            // Validate last name
+            if (!lastName) {
+                document.getElementById('lastNameError').classList.add('show-error');
+                isValid = false;
+            } else {
+                document.getElementById('lastNameError').classList.remove('show-error');
+            }
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                document.getElementById('emailError').classList.add('show-error');
+                isValid = false;
+            } else {
+                document.getElementById('emailError').classList.remove('show-error');
+            }
+            
+            // Validate phone
+            if (!phone) {
+                document.getElementById('phoneError').classList.add('show-error');
+                isValid = false;
+            } else {
+                document.getElementById('phoneError').classList.remove('show-error');
+            }
+            
+            // Validate password
+            if (!password || password.length < 8) {
+                document.getElementById('passwordError').classList.add('show-error');
+                isValid = false;
+            } else {
+                document.getElementById('passwordError').classList.remove('show-error');
+            }
+            
+            // Validate confirm password
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').classList.add('show-error');
+                isValid = false;
+            } else {
+                document.getElementById('confirmPasswordError').classList.remove('show-error');
+            }
+            
+            // Validate terms
+            if (!termsChecked) {
+                alert('Please agree to the Terms of Service and Privacy Policy');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // In a real implementation, this would send data to the server
+                // and then redirect to OTP verification
+                // For now, we'll redirect to the OTP page
+                window.location.href = 'otp.html';
+            }
+        });
+    </script>
+</body>
+</html>

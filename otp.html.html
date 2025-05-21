@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP - BlinkText</title>
+    <style>
+        :root {
+            --primary-color: #5e72e4;
+            --secondary-color: #8392ab;
+            --accent-color: #11cdef;
+            --success-color: #2dce89;
+            --warning-color: #fb6340;
+            --danger-color: #f5365c;
+            --background-color: #f8f9fe;
+            --text-color: #344767;
+            --light-text: #8392ab;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+            --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            color: var(--text-color);
+            background-color: var(--background-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .otp-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .otp-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 400px;
+            padding: 2.5rem;
+            text-align: center;
+        }
+        
+        .otp-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .otp-logo span {
+            color: var(--accent-color);
+        }
+        
+        .logo-icon {
+            margin-right: 8px;
+            font-size: 2rem;
+        }
+        
+        .otp-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .otp-subtitle {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            margin-bottom: 2rem;
+        }
+        
+        .phone-display {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .otp-form {
+            text-align: center;
+        }
+        
+        .otp-inputs {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .otp-input {
+            width: 3rem;
+            height: 3.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .otp-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: #4a5acf;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+        }
+        
+        .resend-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .resend-link:hover {
+            text-decoration: underline;
+        }
+        
+        .timer {
+            font-size: 0.875rem;
+            color: var(--light-text);
+            margin-top: 0.5rem;
+        }
+        
+        .go-back {
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--secondary-color);
+            text-decoration: none;
+            margin-top: 1.5rem;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .go-back i {
+            margin-right: 0.5rem;
+        }
+        
+        .go-back:hover {
+            color: var(--primary-color);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--white);
+            color: var(--light-text);
+            font-size: 0.875rem;
+        }
+        
+        .creator {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .show-error {
+            display: block;
+            animation: shake 0.5s;
+        }
+        
+        @keyframes shake {
+            0%, 100% {transform: translateX(0);}
+            10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
+            20%, 40%, 60%, 80% {transform: translateX(5px);}
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+<body>
+    <div class="otp-container">
+        <div class="otp-card">
+            <div class="otp-logo">
+                <i class="fas fa-comment-dots logo-icon"></i>
+                Blink<span>Text</span>
+            </div>
+            <h1 class="otp-title">Verify Your Number</h1>
+            <p class="otp-subtitle">
+                We've sent a verification code to <br>
+                <span class="phone-display">+233 50 123 4567</span>
+            </p>
+            
+            <form id="otpForm" class="otp-form" action="dashboard.html">
+                <div class="otp-inputs">
+                    <input type="text" class="otp-input" maxlength="1" autofocus>
+                    <input type="text" class="otp-input" maxlength="1">
+                    <input type="text" class="otp-input" maxlength="1">
+                    <input type="text" class="otp-input" maxlength="1">
+                    <input type="text" class="otp-input" maxlength="1">
+                    <input type="text" class="otp-input" maxlength="1">
+                </div>
+                
+                <div id="otpError" class="error-message">Please enter a valid verification code</div>
+                
+                <button type="submit" class="btn btn-primary">Verify & Continue</button>
+                
+                <a href="#" class="resend-link" id="resendLink">Resend Code</a>
+                <div class="timer" id="timer">Resend available in <span id="countdown">60</span> seconds</div>
+                
+                <a href="signup.html" class="go-back">
+                    <i class="fas fa-arrow-left"></i> Back to Sign Up
+                </a>
+            </form>
+        </div>
+    </div>
+    
+    <footer>
+        &copy; 2025 BlinkText. All rights reserved.
+        <span class="creator">Created by MUHADEEN</span>
+    </footer>
+
+    <script>
+        // Auto focus to next input
+        const otpInputs = document.querySelectorAll('.otp-input');
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('keyup', (e) => {
+                if (e.key >= 0 && e.key <= 9) {
+                    if (index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                } else if (e.key === 'Backspace') {
+                    if (index > 0) {
+                        otpInputs[index - 1].focus();
+                    }
+                }
+            });
+        });
+        
+        // Form submission
+        document.getElementById('otpForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+            let otpValue = '';
+            
+            otpInputs.forEach(input => {
+                otpValue += input.value;
+            });
+            
+            if (otpValue.length !== 6) {
+                document.getElementById('otpError').classList.add('show-error');
+                isValid = false;
+            } else {
+                document.getElementById('otpError').classList.remove('show-error');
+            }
+            
+            if (isValid) {
+                // In a real implementation, this would validate the OTP with the server
+                // For now, we'll redirect to the dashboard
+                window.location.href = 'dashboard.html';
+            }
+        });
+        
+        // Countdown timer
+        const resendLink = document.getElementById('resendLink');
+        const timer = document.getElementById('timer');
+        const countdown = document.getElementById('countdown');
+        
+        resendLink.style.display = 'none';
+        
+        let seconds = 60;
+        const countdownInterval = setInterval(() => {
+            seconds--;
+            countdown.textContent = seconds;
+            
+            if (seconds <= 0) {
+                clearInterval(countdownInterval);
+                resendLink.style.display = 'inline-block';
+                timer.style.display = 'none';
+            }
+        }, 1000);
+        
+        resendLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // In a real implementation, this would request a new OTP
+            resendLink.style.display = 'none';
+            timer.style.display = 'block';
+            seconds = 60;
+            countdown.textContent = seconds;
+            
+            // Restart countdown
+            const newCountdownInterval = setInterval(() => {
+                seconds--;
+                countdown.textContent = seconds;
+                
+                if (seconds <= 0) {
+                    clearInterval(newCountdownInterval);
+                    resendLink.style.display = 'inline-block';
+                    timer.style.display = 'none';
+                }
+            }, 1000);
+            
+            // Clear all OTP inputs
+            otpInputs.forEach(input => {
+                input.value = '';
+            });
+            otpInputs[0].focus();
+        });
+    </script>
+</body>
+</html>
