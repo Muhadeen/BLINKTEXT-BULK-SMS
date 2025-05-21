@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlinkText - Pricing</title>
+    <style>
+        :root {
+            --primary-color: #5e72e4;
+            --secondary-color: #8392ab;
+            --accent-color: #11cdef;
+            --success-color: #2dce89;
+            --warning-color: #fb6340;
+            --danger-color: #f5365c;
+            --background-color: #f8f9fe;
+            --text-color: #344767;
+            --light-text: #8392ab;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+            --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            color: var(--text-color);
+            background-color: var(--background-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 10%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        .logo-icon {
+            margin-right: 8px;
+            font-size: 1.8rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: #4a5acf;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(94, 114, 228, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Pricing Section */
+        .pricing-section {
+            padding-top: 7rem;
+            padding-bottom: 5rem;
+        }
+        
+        .section-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            padding: 0 1rem;
+        }
+        
+        .section-intro h1 {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        
+        .section-intro p {
+            color: var(--light-text);
+            font-size: 1.1rem;
+        }
+        
+        .section-divider {
+            height: 3px;
+            width: 80px;
+            background-color: var(--primary-color);
+            margin: 2rem auto;
+        }
+        
+        .pricing-plans {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .pricing-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 350px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+        }
+        
+        .popular-tag {
+            position: absolute;
+            top: 12px;
+            right: -30px;
+            background-color: var(--success-color);
+            color: var(--white);
+            padding: 0.25rem 2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+        
+        .plan-header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .plan-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+        
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .price-currency {
+            font-size: 1.5rem;
+            font-weight: 600;
+            vertical-align: super;
+        }
+        
+        .price-period {
+            font-size: 1rem;
+            color: var(--light-text);
+            font-weight: 400;
+        }
+        
+        .plan-description {
+            color: var(--light-text);
+            margin-bottom: 1.5rem;
+        }
+        
+        .plan-features {
+            padding: 2rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .feature-icon {
+            margin-right: 10px;
+            color: var(--success-color);
+        }
+        
+        .feature-icon.disabled {
+            color: var(--light-text);
+        }
+        
+        .feature-text {
+            flex: 1;
+        }
+        
+        .unavailable {
+            color: var(--light-text);
+            text-decoration: line-through;
+        }
+        
+        .plan-footer {
+            padding: 0 2rem 2rem;
+            text-align: center;
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+        }
+        
+        /* Payment Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--light-text);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--danger-color);
+        }
+        
+        .modal-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .payment-options {
+            margin-bottom: 1.5rem;
+        }
+        
+        .payment-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-option:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(94, 114, 228, 0.05);
+        }
+        
+        .payment-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(94, 114, 228, 0.1);
+        }
+        
+        .payment-option-radio {
+            margin-right: 1rem;
+        }
+        
+        .payment-option-details {
+            flex: 1;
+        }
+        
+        .payment-form {
+            margin-top: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+            font-family: var(--font-family);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .confirmation-message {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+        
+        .confirmation-icon {
+            font-size: 3rem;
+            color: var(--success-color);
+            margin-bottom: 1rem;
+        }
+        
+        .payment-details {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .payment-note {
+            margin-top: 1rem;
+            color: var(--light-text);
+            font-size: 0.875rem;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            padding: 5rem 2rem;
+            background-color: var(--white);
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1.5rem 0;
+        }
+        
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .faq-toggle {
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-toggle.active {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            margin-top: 1rem;
+            display: none;
+            color: var(--light-text);
+            padding-left: 1rem;
+            border-left: 2px solid var(--primary-color);
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            padding: 5rem 2rem;
+            text-align: center;
+            color: var(--white);
+        }
+        
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .btn-light {
+            background-color: var(--white);
+            color: var(--primary-color);
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+        }
+        
+        .btn-light:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #2a2f4a;
+            color: var(--white);
+            padding: 3rem 2rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-logo span {
+            color: var(--accent-color);
+        }
+        
+        .footer-about p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+        }
+        
+        .creator {
+            display: block;
+            margin-top: 0.5rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            nav {
+                padding: 1rem 5%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .section-intro h1 {
+                font-size: 2rem;
+            }
+            
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-comment-dots logo-icon"></i>
+                Blink<span>Text</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="pricing.html" class="active">Pricing</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+            <div class="cta-buttons">
+                <a href="login.html" class="btn btn-outline">Log In</a>
+                <a href="signup.html" class="btn btn-primary">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="pricing-section">
+        <div class="section-intro">
+            <h1>Simple, Transparent Pricing</h1>
+            <p>Choose the perfect SMS package for your needs. Pay only for what you use with no hidden fees.</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="pricing-plans">
+            <!-- Basic Plan -->
+            <div class="pricing-card">
+                <div class="plan-header">
+                    <div class="plan-name">Basic</div>
+                    <div class="plan-price"><span class="price-currency">₵</span>15</div>
+                    <div class="plan-description">Perfect for small businesses just starting with SMS marketing</div>
+                </div>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">100 SMS Credits</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Delivery Reports</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Basic Analytics</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Email Support</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="plan-footer">
+                    <button class="btn btn-primary btn-block buy-credits" data-package="basic" data-credits="100" data-price="15">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- Standard Plan -->
+            <div class="pricing-card">
+                <div class="plan-header">
+                    <div class="plan-name">Standard</div>
+                    <div class="plan-price"><span class="price-currency">₵</span>22</div>
+                    <div class="plan-description">Great for growing businesses with regular SMS needs</div>
+                </div>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">150 SMS Credits</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Delivery Reports</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Basic Analytics</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Priority Email Support</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="plan-footer">
+                    <button class="btn btn-primary btn-block buy-credits" data-package="standard" data-credits="150" data-price="22">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- Plus Plan -->
+            <div class="pricing-card">
+                <div class="popular-tag">Popular</div>
+                <div class="plan-header">
+                    <div class="plan-name">Plus</div>
+                    <div class="plan-price"><span class="price-currency">₵</span>50</div>
+                    <div class="plan-description">Ideal for businesses with moderate SMS marketing needs</div>
+                </div>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">300 SMS Credits</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Delivery Reports</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Advanced Analytics</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Priority Email Support</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="plan-footer">
+                    <button class="btn btn-primary btn-block buy-credits" data-package="plus" data-credits="300" data-price="50">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="pricing-card">
+                <div class="plan-header">
+                    <div class="plan-name">Pro</div>
+                    <div class="plan-price"><span class="price-currency
