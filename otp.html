@@ -85,6 +85,17 @@
             margin-bottom: 2rem;
         }
         
+        .sender-info {
+            font-size: 0.85rem;
+            color: var(--light-text);
+            margin-bottom: 1rem;
+        }
+        
+        .sender-number {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
         .phone-display {
             font-weight: 600;
             color: var(--primary-color);
@@ -112,6 +123,24 @@
         }
         
         .otp-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .phone-input-container {
+            margin-bottom: 2rem;
+        }
+        
+        .phone-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .phone-input:focus {
             outline: none;
             border-color: var(--primary-color);
         }
@@ -209,6 +238,14 @@
             10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
             20%, 40%, 60%, 80% {transform: translateX(5px);}
         }
+        
+        .step {
+            display: none;
+        }
+        
+        .active-step {
+            display: block;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
@@ -219,33 +256,58 @@
                 <i class="fas fa-comment-dots logo-icon"></i>
                 Blink<span>Text</span>
             </div>
-            <h1 class="otp-title">Verify Your Number</h1>
-            <p class="otp-subtitle">
-                We've sent a verification code to <br>
-                <span class="phone-display">+233 50 123 4567</span>
-            </p>
             
-            <form id="otpForm" class="otp-form" action="dashboard.html">
-                <div class="otp-inputs">
-                    <input type="text" class="otp-input" maxlength="1" autofocus>
-                    <input type="text" class="otp-input" maxlength="1">
-                    <input type="text" class="otp-input" maxlength="1">
-                    <input type="text" class="otp-input" maxlength="1">
-                    <input type="text" class="otp-input" maxlength="1">
-                    <input type="text" class="otp-input" maxlength="1">
+            <!-- Step 1: Enter phone number -->
+            <div id="phoneStep" class="step active-step">
+                <h1 class="otp-title">Enter Your Phone Number</h1>
+                <p class="otp-subtitle">
+                    We'll send a verification code to your phone
+                </p>
+                <!-- Sender number embedded in system but not displayed to user -->
+                
+                <div class="phone-input-container">
+                    <input type="tel" id="phoneInput" class="phone-input" placeholder="Enter your phone number" required>
                 </div>
                 
-                <div id="otpError" class="error-message">Please enter a valid verification code</div>
+                <div id="phoneError" class="error-message">Please enter a valid phone number</div>
                 
-                <button type="submit" class="btn btn-primary">Verify & Continue</button>
-                
-                <a href="#" class="resend-link" id="resendLink">Resend Code</a>
-                <div class="timer" id="timer">Resend available in <span id="countdown">60</span> seconds</div>
+                <button id="sendCodeBtn" class="btn btn-primary">Send Verification Code</button>
                 
                 <a href="signup.html" class="go-back">
                     <i class="fas fa-arrow-left"></i> Back to Sign Up
                 </a>
-            </form>
+            </div>
+            
+            <!-- Step 2: Enter OTP -->
+            <div id="otpStep" class="step">
+                <h1 class="otp-title">Verify Your Number</h1>
+                <p class="otp-subtitle">
+                    We've sent a verification code to <br>
+                    <span id="receiverNumber" class="phone-display"></span>
+                </p>
+                
+                <form id="otpForm" class="otp-form" action="dashboard.html">
+                    <div class="otp-inputs">
+                        <input type="text" class="otp-input" maxlength="1" autofocus>
+                        <input type="text" class="otp-input" maxlength="1">
+                        <input type="text" class="otp-input" maxlength="1">
+                        <input type="text" class="otp-input" maxlength="1">
+                        <input type="text" class="otp-input" maxlength="1">
+                        <input type="text" class="otp-input" maxlength="1">
+                    </div>
+                    
+                    <div id="otpError" class="error-message">Please enter a valid verification code</div>
+                    
+                    <button type="submit" class="btn btn-primary">Verify & Continue</button>
+                    
+                    <a href="#" class="resend-link" id="resendLink">Resend Code</a>
+                    <div class="timer" id="timer">Resend available in <span id="countdown">60</span> seconds</div>
+                    
+                    <a href="#" id="changeNumber" class="go-back">
+                        <i class="fas fa-arrow-left"></i> Change Phone Number
+                    </a>
+                </form>
+            </div>
         </div>
     </div>
     
@@ -255,6 +317,72 @@
     </footer>
 
     <script>
+        // Hidden sender number that will be used for messaging
+        const senderNumber = '+233547779727'; // Embedded but not displayed to user
+        const phoneStep = document.getElementById('phoneStep');
+        const otpStep = document.getElementById('otpStep');
+        const phoneInput = document.getElementById('phoneInput');
+        const sendCodeBtn = document.getElementById('sendCodeBtn');
+        const receiverNumber = document.getElementById('receiverNumber');
+        const phoneError = document.getElementById('phoneError');
+        const changeNumber = document.getElementById('changeNumber');
+        
+        // Phone number validation and sending code
+        sendCodeBtn.addEventListener('click', function() {
+            const phoneNumber = phoneInput.value.trim();
+            
+            // Simple validation - you can enhance this as needed
+            if (phoneNumber.length < 10) {
+                phoneError.classList.add('show-error');
+                return;
+            }
+            
+            phoneError.classList.remove('show-error');
+            
+            // Display the receiver's number in the OTP screen
+            receiverNumber.textContent = formatPhoneNumber(phoneNumber);
+            
+            // Actually send the code using the embedded sender number
+            // In a real implementation, this would call an API to send the code from senderNumber to phoneNumber
+            console.log(`Sending code from ${senderNumber} to ${phoneNumber}`); // This is just for development purposes
+            
+            // Switch to OTP verification step
+            phoneStep.classList.remove('active-step');
+            otpStep.classList.add('active-step');
+            
+            // Focus on first OTP input
+            document.querySelectorAll('.otp-input')[0].focus();
+            
+            // Start the countdown
+            startCountdown();
+        });
+        
+        // Format phone number for display
+        function formatPhoneNumber(number) {
+            // Basic formatting - you can enhance this as needed
+            if (number.startsWith('+')) {
+                return number;
+            } else if (number.startsWith('0')) {
+                return '+233 ' + number.substring(1);
+            } else {
+                return '+233 ' + number;
+            }
+        }
+        
+        // Change number button
+        changeNumber.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Switch back to phone input step
+            otpStep.classList.remove('active-step');
+            phoneStep.classList.add('active-step');
+            
+            // Clear OTP inputs
+            document.querySelectorAll('.otp-input').forEach(input => {
+                input.value = '';
+            });
+        });
+        
         // Auto focus to next input
         const otpInputs = document.querySelectorAll('.otp-input');
         otpInputs.forEach((input, index) => {
@@ -264,7 +392,7 @@
                         otpInputs[index + 1].focus();
                     }
                 } else if (e.key === 'Backspace') {
-                    if (index > 0) {
+                    if (index > 0 && input.value === '') {
                         otpInputs[index - 1].focus();
                     }
                 }
@@ -291,50 +419,52 @@
             
             if (isValid) {
                 // In a real implementation, this would validate the OTP with the server
-                // For now, we'll redirect to the dashboard
+            // Message sent from embedded sender number: senderNumber
+            // For now, we'll redirect to the dashboard
                 window.location.href = 'dashboard.html';
             }
         });
         
-        // Countdown timer
+        // Countdown timer functions
         const resendLink = document.getElementById('resendLink');
         const timer = document.getElementById('timer');
         const countdown = document.getElementById('countdown');
+        let countdownInterval;
         
-        resendLink.style.display = 'none';
-        
-        let seconds = 60;
-        const countdownInterval = setInterval(() => {
-            seconds--;
-            countdown.textContent = seconds;
-            
-            if (seconds <= 0) {
-                clearInterval(countdownInterval);
-                resendLink.style.display = 'inline-block';
-                timer.style.display = 'none';
-            }
-        }, 1000);
-        
-        resendLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // In a real implementation, this would request a new OTP
+        function startCountdown() {
+            // Hide resend link initially
             resendLink.style.display = 'none';
             timer.style.display = 'block';
-            seconds = 60;
+            
+            // Clear any existing interval
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+            
+            // Set countdown time
+            let seconds = 60;
             countdown.textContent = seconds;
             
-            // Restart countdown
-            const newCountdownInterval = setInterval(() => {
+            // Start new countdown
+            countdownInterval = setInterval(() => {
                 seconds--;
                 countdown.textContent = seconds;
                 
                 if (seconds <= 0) {
-                    clearInterval(newCountdownInterval);
+                    clearInterval(countdownInterval);
                     resendLink.style.display = 'inline-block';
                     timer.style.display = 'none';
                 }
             }, 1000);
+        }
+        
+        // Resend code
+        resendLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // In a real implementation, this would request a new OTP
+            // Using embedded sender number: senderNumber
+            startCountdown();
             
             // Clear all OTP inputs
             otpInputs.forEach(input => {
