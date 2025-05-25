@@ -162,11 +162,10 @@
         }
         
         .pricing-plans {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 1rem;
         }
@@ -175,8 +174,6 @@
             background-color: var(--white);
             border-radius: 10px;
             box-shadow: var(--shadow);
-            width: 100%;
-            max-width: 350px;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -213,42 +210,37 @@
         }
         
         .plan-price {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 700;
             color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
         
         .price-currency {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 600;
             vertical-align: super;
         }
         
-        .price-period {
-            font-size: 1rem;
-            color: var(--light-text);
-            font-weight: 400;
-        }
-        
         .plan-description {
             color: var(--light-text);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
         }
         
         .plan-features {
-            padding: 2rem;
+            padding: 1.5rem 2rem;
         }
         
         .feature-list {
             list-style: none;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
         
         .feature-item {
             display: flex;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             color: var(--text-color);
         }
         
@@ -257,17 +249,9 @@
             color: var(--success-color);
         }
         
-        .feature-icon.disabled {
-            color: var(--light-text);
-        }
-        
         .feature-text {
             flex: 1;
-        }
-        
-        .unavailable {
-            color: var(--light-text);
-            text-decoration: line-through;
+            font-size: 0.9rem;
         }
         
         .plan-footer {
@@ -296,7 +280,7 @@
         
         .modal-content {
             background-color: var(--white);
-            margin: 10% auto;
+            margin: 5% auto;
             padding: 2rem;
             border-radius: 10px;
             width: 90%;
@@ -327,6 +311,14 @@
         .modal-header h3 {
             font-size: 1.5rem;
             color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .payment-summary {
+            background-color: var(--background-color);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
         }
         
         .payment-options {
@@ -362,10 +354,6 @@
             flex: 1;
         }
         
-        .payment-form {
-            margin-top: 1.5rem;
-        }
-        
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -391,113 +379,26 @@
             border-color: var(--primary-color);
         }
         
-        .confirmation-message {
-            text-align: center;
-            padding: 2rem;
+        .confirmation-step {
             display: none;
+            text-align: center;
         }
         
         .confirmation-icon {
             font-size: 3rem;
-            color: var(--success-color);
+            color: var(--warning-color);
             margin-bottom: 1rem;
         }
         
-        .payment-details {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
+        .success-step {
             display: none;
-        }
-        
-        .payment-note {
-            margin-top: 1rem;
-            color: var(--light-text);
-            font-size: 0.875rem;
-        }
-        
-        /* FAQ Section */
-        .faq-section {
-            padding: 5rem 2rem;
-            background-color: var(--white);
-        }
-        
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .faq-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 1.5rem 0;
-        }
-        
-        .faq-question {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text-color);
-        }
-        
-        .faq-toggle {
-            color: var(--primary-color);
-            transition: transform 0.3s ease;
-        }
-        
-        .faq-toggle.active {
-            transform: rotate(180deg);
-        }
-        
-        .faq-answer {
-            margin-top: 1rem;
-            display: none;
-            color: var(--light-text);
-            padding-left: 1rem;
-            border-left: 2px solid var(--primary-color);
-        }
-        
-        .faq-answer.show {
-            display: block;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-            padding: 5rem 2rem;
             text-align: center;
-            color: var(--white);
         }
         
-        .cta-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .cta-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .cta-content p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        
-        .btn-light {
-            background-color: var(--white);
-            color: var(--primary-color);
-            padding: 0.75rem 2rem;
-            font-size: 1rem;
-        }
-        
-        .btn-light:hover {
-            background-color: rgba(255, 255, 255, 0.9);
-            transform: translateY(-2px);
-            box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+        .success-icon {
+            font-size: 3rem;
+            color: var(--success-color);
+            margin-bottom: 1rem;
         }
         
         /* Footer */
@@ -585,12 +486,6 @@
         }
         
         /* Responsive */
-        @media (max-width: 992px) {
-            nav {
-                padding: 1rem 5%;
-            }
-        }
-        
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -600,8 +495,9 @@
                 font-size: 2rem;
             }
             
-            .cta-content h2 {
-                font-size: 2rem;
+            .pricing-plans {
+                grid-template-columns: 1fr;
+                max-width: 400px;
             }
         }
     </style>
@@ -631,7 +527,7 @@
     <section class="pricing-section">
         <div class="section-intro">
             <h1>Simple, Transparent Pricing</h1>
-            <p>Choose the perfect SMS package for your needs. Pay only for what you use with no hidden fees.</p>
+            <p>Choose the perfect SMS package for your needs. Pay only for what you use with no hidden fees. Each contact represents one SMS.</p>
             <div class="section-divider"></div>
         </div>
 
@@ -641,7 +537,7 @@
                 <div class="plan-header">
                     <div class="plan-name">Basic</div>
                     <div class="plan-price"><span class="price-currency">₵</span>15</div>
-                    <div class="plan-description">Perfect for small businesses just starting with SMS marketing</div>
+                    <div class="plan-description">Perfect for small businesses starting with SMS marketing</div>
                 </div>
                 <div class="plan-features">
                     <ul class="feature-list">
@@ -664,7 +560,7 @@
                     </ul>
                 </div>
                 <div class="plan-footer">
-                    <button class="btn btn-primary btn-block buy-credits" data-package="basic" data-credits="100" data-price="15">Buy Now</button>
+                    <button class="btn btn-primary btn-block buy-credits" data-package="Basic" data-credits="100" data-price="15">Buy Now</button>
                 </div>
             </div>
 
@@ -687,7 +583,7 @@
                         </li>
                         <li class="feature-item">
                             <i class="fas fa-check feature-icon"></i>
-                            <span class="feature-text">Basic Analytics</span>
+                            <span class="feature-text">Advanced Analytics</span>
                         </li>
                         <li class="feature-item">
                             <i class="fas fa-check feature-icon"></i>
@@ -696,7 +592,7 @@
                     </ul>
                 </div>
                 <div class="plan-footer">
-                    <button class="btn btn-primary btn-block buy-credits" data-package="standard" data-credits="150" data-price="22">Buy Now</button>
+                    <button class="btn btn-primary btn-block buy-credits" data-package="Standard" data-credits="150" data-price="22">Buy Now</button>
                 </div>
             </div>
 
@@ -724,17 +620,224 @@
                         </li>
                         <li class="feature-item">
                             <i class="fas fa-check feature-icon"></i>
-                            <span class="feature-text">Priority Email Support</span>
+                            <span class="feature-text">Priority Support</span>
                         </li>
                     </ul>
                 </div>
                 <div class="plan-footer">
-                    <button class="btn btn-primary btn-block buy-credits" data-package="plus" data-credits="300" data-price="50">Buy Now</button>
+                    <button class="btn btn-primary btn-block buy-credits" data-package="Plus" data-credits="300" data-price="50">Buy Now</button>
                 </div>
             </div>
 
-            <!-- Pro Plan -->
+            <!-- Premium Plan -->
             <div class="pricing-card">
                 <div class="plan-header">
-                    <div class="plan-name">Pro</div>
-                    <div class="plan-price"><span class="price-currency
+                    <div class="plan-name">Premium</div>
+                    <div class="plan-price"><span class="price-currency">₵</span>60</div>
+                    <div class="plan-description">Perfect for established businesses with higher volume</div>
+                </div>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">500 SMS Credits</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Delivery Reports</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Advanced Analytics</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Priority Support</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="plan-footer">
+                    <button class="btn btn-primary btn-block buy-credits" data-package="Premium" data-credits="500" data-price="60">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- Business Plan -->
+            <div class="pricing-card">
+                <div class="plan-header">
+                    <div class="plan-name">Business</div>
+                    <div class="plan-price"><span class="price-currency">₵</span>80</div>
+                    <div class="plan-description">Great for businesses with consistent high-volume needs</div>
+                </div>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">1,000 SMS Credits</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Delivery Reports</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Advanced Analytics</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Priority Support</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="plan-footer">
+                    <button class="btn btn-primary btn-block buy-credits" data-package="Business" data-credits="1000" data-price="80">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- Professional Plan -->
+            <div class="pricing-card">
+                <div class="plan-header">
+                    <div class="plan-name">Professional</div>
+                    <div class="plan-price"><span class="price-currency">₵</span>120</div>
+                    <div class="plan-description">Ideal for growing enterprises with bulk SMS needs</div>
+                </div>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">1,500 SMS Credits</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Delivery Reports</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Advanced Analytics</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Dedicated Support</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="plan-footer">
+                    <button class="btn btn-primary btn-block buy-credits" data-package="Professional" data-credits="1500" data-price="120">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div class="pricing-card">
+                <div class="plan-header">
+                    <div class="plan-name">Enterprise</div>
+                    <div class="plan-price"><span class="price-currency">₵</span>160</div>
+                    <div class="plan-description">Perfect for large-scale marketing campaigns</div>
+                </div>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">3,000 SMS Credits</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Delivery Reports</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Advanced Analytics</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Dedicated Support</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="plan-footer">
+                    <button class="btn btn-primary btn-block buy-credits" data-package="Enterprise" data-credits="3000" data-price="160">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- Corporate Plan -->
+            <div class="pricing-card">
+                <div class="plan-header">
+                    <div class="plan-name">Corporate</div>
+                    <div class="plan-price"><span class="price-currency">₵</span>200</div>
+                    <div class="plan-description">For corporations with massive SMS requirements</div>
+                </div>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">5,000 SMS Credits</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Delivery Reports</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Advanced Analytics</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Dedicated Support</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="plan-footer">
+                    <button class="btn btn-primary btn-block buy-credits" data-package="Corporate" data-credits="5000" data-price="200">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- Ultimate Plan -->
+            <div class="pricing-card">
+                <div class="popular-tag">Best Value</div>
+                <div class="plan-header">
+                    <div class="plan-name">Ultimate</div>
+                    <div class="plan-price"><span class="price-currency">₵</span>1000</div>
+                    <div class="plan-description">Maximum capacity for the largest operations</div>
+                </div>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">10,000 SMS Credits</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Delivery Reports</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">Advanced Analytics</span>
+                        </li>
+                        <li class="feature-item">
+                            <i class="fas fa-check feature-icon"></i>
+                            <span class="feature-text">VIP Support</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="plan-footer">
+                    <button class="btn btn-primary btn-block buy-credits" data-package="Ultimate" data-credits="10000" data-price="1000">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            
+            <!-- Payment Selection Step -->
+            <div id="paymentStep">
+                <div class="modal-header">
+                    <h3>Complete Your Purchase</h3>
+                    <div class="payment-summary">
+                        <div id="packageDetails"></div>
+                    </div>
+                </div>
+
+                <div class="payment-options">
+                    <div class="payment-option" data-method="momo">
+                        <input type
