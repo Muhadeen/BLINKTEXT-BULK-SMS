@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - BlinkText</title>
+    <style>
+        :root {
+            --primary-color: #5e72e4;
+            --secondary-color: #8392ab;
+            --accent-color: #11cdef;
+            --success-color: #2dce89;
+            --warning-color: #fb6340;
+            --danger-color: #f5365c;
+            --background-color: #f8f9fe;
+            --text-color: #344767;
+            --light-text: #8392ab;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+            --light-shadow: 0 2px 4px rgba(50, 50, 93, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+            --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            color: var(--text-color);
+            background-color: var(--background-color);
+            line-height: 1.6;
+        }
+        
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 2rem 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            padding: 0 2rem 2rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        .logo-icon {
+            margin-right: 8px;
+            font-size: 1.8rem;
+        }
+        
+        .sidebar-nav {
+            padding: 2rem 0;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 0.75rem 2rem;
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(94, 114, 228, 0.1);
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+        }
+        
+        .nav-item i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+        
+        .top-bar {
+            background-color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: var(--light-shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .welcome-text h1 {
+            font-size: 1.75rem;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .welcome-text p {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .user-details span {
+            display: block;
+            font-size: 0.85rem;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .user-status {
+            color: var(--light-text);
+        }
+        
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--light-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-title {
+            color: var(--light-text);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+        
+        .stat-icon.messages {
+            background: linear-gradient(135deg, var(--primary-color), #4a5acf);
+        }
+        
+        .stat-icon.contacts {
+            background: linear-gradient(135deg, var(--success-color), #20a56a);
+        }
+        
+        .stat-icon.groups {
+            background: linear-gradient(135deg, var(--warning-color), #e4502a);
+        }
+        
+        .stat-icon.delivery {
+            background: linear-gradient(135deg, var(--accent-color), #0da5c0);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-description {
+            color: var(--light-text);
+            font-size: 0.875rem;
+        }
+        
+        /* Quick Actions */
+        .quick-actions {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--light-shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .action-btn {
+            padding: 1rem;
+            border: 2px dashed #e9ecef;
+            border-radius: 8px;
+            text-align: center;
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .action-btn:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(94, 114, 228, 0.05);
+            color: var(--primary-color);
+        }
+        
+        .action-btn i {
+            font-size: 1.5rem;
+        }
+        
+        /* Recent Activity */
+        .recent-activity {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--light-shadow);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--light-text);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+        
+        .empty-state p {
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .top-bar {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-comment-dots logo-icon"></i>
+                    Blink<span>Text</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-paper-plane"></i>
+                    Send Messages
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    Contacts
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-layer-group"></i>
+                    Groups
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    Reports
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="welcome-text">
+                    <h1>Welcome back, <span id="userName">John Doe</span>!</h1>
+                    <p>Here's what's happening with your messaging campaigns today.</p>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">JD</div>
+                    <div class="user-details">
+                        <span class="user-name" id="userNameDisplay">John Doe</span>
+                        <span class="user-status">Online</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Messages Sent</span>
+                        <div class="stat-icon messages">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                    </div>
+                    <div class="stat-number">0</div>
+                    <div class="stat-description">Total messages sent</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Total Contacts</span>
+                        <div class="stat-icon contacts">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="stat-number">0</div>
+                    <div class="stat-description">Contacts in your database</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Contact Groups</span>
+                        <div class="stat-icon groups">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                    </div>
+                    <div class="stat-number">0</div>
+                    <div class="stat-description">Organized contact groups</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Delivery Rate</span>
+                        <div class="stat-icon delivery">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div class="stat-number">0%</div>
+                    <div class="stat-description">Average delivery success</div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="actions-grid">
+                    <a href="#" class="action-btn">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Send New Message</span>
+                    </a>
+                    <a href="#" class="action-btn">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Add Contacts</span>
+                    </a>
+                    <a href="#" class="action-btn">
+                        <i class="fas fa-users-cog"></i>
+                        <span>Create Group</span>
+                    </a>
+                    <a href="#" class="action-btn">
+                        <i class="fas fa-file-import"></i>
+                        <span>Import Contacts</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <h2 class="section-title">Recent Activity</h2>
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <h3>No activity yet</h3>
+                    <p>Your recent messaging activity will appear here once you start sending messages.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input for Excel import -->
+    <input type="file" id="excelFileInput" accept=".xlsx,.xls" style="display: none;">
+    
+    <!-- Create Group Modal -->
+    <div id="createGroupModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Group</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="groupName">Group Name</label>
+                    <input type="text" id="groupName" placeholder="Enter group name" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label>Add Contacts to Group</label>
+                    <div class="contact-options">
+                        <button type="button" class="btn btn-outline" onclick="importContactsForGroup()">
+                            <i class="fas fa-file-import"></i> Import from Excel
+                        </button>
+                        <button type="button" class="btn btn-outline" onclick="addFromPhoneForGroup()">
+                            <i class="fas fa-mobile-alt"></i> Add from Phone
+                        </button>
+                    </div>
+                </div>
+                <div id="selectedContacts" class="selected-contacts" style="display: none;">
+                    <h4>Selected Contacts</h4>
+                    <div id="contactsList"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeCreateGroupModal()">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="createGroup()">Create Group</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get login name from URL parameters or session storage
+        function getLoginName() {
+            // Check URL parameters first
+            const urlParams = new URLSearchParams(window.location.search);
+            const nameFromUrl = urlParams.get('name') || urlParams.get('loginName');
+            
+            // Check various storage locations
+            const nameFromSession = sessionStorage.getItem('loginName') || 
+                                  sessionStorage.getItem('userName') || 
+                                  sessionStorage.getItem('currentUser');
+            
+            // Return the first available name, or prompt user if none found
+            return nameFromUrl || nameFromSession || promptForName();
+        }
+
+        function promptForName() {
+            const name = prompt('Please enter your name for the dashboard:');
+            if (name) {
+                sessionStorage.setItem('loginName', name);
+                return name;
+            }
+            return 'User';
+        }
+
+        function updateUserInfo() {
+            const loginName = getLoginName();
+            
+            // Update user name displays
+            document.getElementById('userName').textContent = loginName;
+            document.getElementById('userNameDisplay').textContent = loginName;
+            
+            // Update avatar with initials
+            const initials = loginName.split(' ').map(name => name.charAt(0)).join('').toUpperCase();
+            document.getElementById('userAvatar').textContent = initials;
+        }
+
+        // Import Contacts functionality
+        function importContacts() {
+            document.getElementById('excelFileInput').click();
+        }
+
+        // Handle Excel file selection
+        document.getElementById('excelFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Check if it's an Excel file
+                const validTypes = ['.xlsx', '.xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
+                const isValidType = validTypes.some(type => 
+                    file.name.toLowerCase().endsWith(type.toLowerCase()) || 
+                    file.type === type
+                );
+                
+                if (isValidType) {
+                    processExcelFile(file);
+                } else {
+                    alert('Please select a valid Excel file (.xlsx or .xls)');
+                }
+            }
+        });
+
+        function processExcelFile(file) {
+            // Show loading message
+            alert(`Processing ${file.name}...\n\nExpected format:\nColumn A: First Name\nColumn B: Last Name\nColumn C: Contact/Phone Number`);
+            
+            // Here you would normally process the Excel file
+            // For demonstration, we'll simulate processing
+            setTimeout(() => {
+                const contactCount = Math.floor(Math.random() * 50) + 10; // Simulate 10-60 contacts
+                alert(`Successfully imported ${contactCount} contacts from ${file.name}!\n\nContacts have been added to your contact list.`);
+                
+                // Update the contacts count in the dashboard
+                document.querySelector('.stat-card:nth-child(2) .stat-number').textContent = contactCount;
+            }, 2000);
+        }
+
+        // Add from phone contacts
+        function addFromPhone() {
+            // Check if the Contact Picker API is supported
+            if ('contacts' in navigator && 'ContactsManager' in window) {
+                navigator.contacts.select(['name', 'tel'], { multiple: true })
+                    .then(contacts => {
+                        if (contacts.length > 0) {
+                            alert(`Successfully added ${contacts.length} contacts from your phone!`);
+                            // Update contacts count
+                            const currentCount = parseInt(document.querySelector('.stat-card:nth-child(2) .stat-number').textContent);
+                            document.querySelector('.stat-card:nth-child(2) .stat-number').textContent = currentCount + contacts.length;
+                        }
+                    })
+                    .catch(err => {
+                        console.log('Contact selection cancelled or failed:', err);
+                        // Fallback for browsers that don't support Contact Picker API
+                        showPhoneContactFallback();
+                    });
+            } else {
+                showPhoneContactFallback();
+            }
+        }
+
+        function showPhoneContactFallback() {
+            alert('To add contacts from your phone:\n\n1. Export your contacts as a CSV or Excel file\n2. Use the "Import Contacts" option\n3. Select your exported file\n\nAlternatively, you can manually add contacts one by one.');
+        }
+
+        // Create Group Modal functions
+        function openCreateGroupModal() {
+            document.getElementById('createGroupModal').style.display = 'flex';
+        }
+
+        function closeCreateGroupModal() {
+            document.getElementById('createGroupModal').style.display = 'none';
+            document.getElementById('groupName').value = '';
+            document.getElementById('selectedContacts').style.display = 'none';
+            document.getElementById('contactsList').innerHTML = '';
+        }
+
+        function importContactsForGroup() {
+            // Simulate selecting contacts from Excel for group
+            alert('Select an Excel file with contacts to add to this group.\n\nExpected format:\nColumn A: First Name\nColumn B: Last Name\nColumn C: Contact/Phone Number');
+            
+            // Simulate file selection and processing
+            setTimeout(() => {
+                const contactCount = Math.floor(Math.random() * 20) + 5;
+                document.getElementById('selectedContacts').style.display = 'block';
+                document.getElementById('contactsList').innerHTML = `
+                    <div class="contact-summary">
+                        <i class="fas fa-users"></i>
+                        ${contactCount} contacts selected from Excel file
+                    </div>
+                `;
+            }, 1500);
+        }
+
+        function addFromPhoneForGroup() {
+            // Similar to main phone contact function but for group creation
+            if ('contacts' in navigator && 'ContactsManager' in window) {
+                navigator.contacts.select(['name', 'tel'], { multiple: true })
+                    .then(contacts => {
+                        if (contacts.length > 0) {
+                            document.getElementById('selectedContacts').style.display = 'block';
+                            document.getElementById('contactsList').innerHTML = `
+                                <div class="contact-summary">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    ${contacts.length} contacts selected from phone
+                                </div>
+                            `;
+                        }
+                    })
+                    .catch(err => {
+                        alert('Contact selection cancelled or not supported on this device.');
+                    });
+            } else {
+                alert('Phone contact access not supported on this device.\nPlease use the Excel import option instead.');
+            }
+        }
+
+        function createGroup() {
+            const groupName = document.getElementById('groupName').value.trim();
+            const hasContacts = document.getElementById('selectedContacts').style.display !== 'none';
+            
+            if (!groupName) {
+                alert('Please enter a group name.');
+                return;
+            }
+            
+            if (!hasContacts) {
+                alert('Please add some contacts to the group.');
+                return;
+            }
+            
+            // Simulate group creation
+            alert(`Group "${groupName}" created successfully!`);
+            
+            // Update groups count
+            const currentGroups = parseInt(document.querySelector('.stat-card:nth-child(3) .stat-number').textContent);
+            document.querySelector('.stat-card:nth-child(3) .stat-number').textContent = currentGroups + 1;
+            
+            closeCreateGroupModal();
+        }
+
+        // Initialize user info on page load
+        document.addEventListener('DOMContentLoaded', updateUserInfo);
+
+        // Update action button event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Import Contacts button
+            const importBtn = document.querySelector('.action-btn:nth-child(4)');
+            importBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                importContacts();
+            });
+
+            // Add Contacts button
+            const addContactsBtn = document.querySelector('.action-btn:nth-child(2)');
+            addContactsBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                addFromPhone();
+            });
+
+            // Create Group button
+            const createGroupBtn = document.querySelector('.action-btn:nth-child(3)');
+            createGroupBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openCreateGroupModal();
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(e) {
+                const modal = document.getElementById('createGroupModal');
+                if (e.target === modal) {
+                    closeCreateGroupModal();
+                }
+            });
+
+            // Close modal button
+            document.querySelector('.close-modal').addEventListener('click', closeCreateGroupModal);
+        });
+
+        // Add some interactivity to nav items
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all items
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+            });
+        });
+
+        // Add hover effects to stat cards
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
